@@ -11,10 +11,15 @@ function Loader() {
 const Home = () => {
   return (
     <div className='fixed top-0 left-0 w-full h-full bg-black'>
-      {/* Camera moved to [0, 0, 8] to see the Earth clearly */}
-      <Canvas camera={{ position: [0, 50, 10] }}>
+      
+      {/* FIXED CAMERA:
+         [0, 0, 8] 
+         0 = x (centered horizontally)
+         0 = y (centered vertically)
+         8 = z (distance away from the object)
+      */}
+      <Canvas camera={{ position: [0, 0, 200], fov: 45 }}>
         
-        {/* THIS WAS MISSING: Suspense handles the loading state */}
         <Suspense fallback={<Loader />}>
           <Earth />
         </Suspense>
