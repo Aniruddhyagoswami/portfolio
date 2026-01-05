@@ -1,16 +1,92 @@
-# React + Vite
+# 🌐 Interactive 3D Journey Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![Three.js](https://img.shields.io/badge/Three.js-Black?logo=three.js)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_v4-38B2AC?logo=tailwind-css)
+![Vite](https://img.shields.io/badge/Vite-Fast-yellow?logo=vite)
 
-Currently, two official plugins are available:
+> **More than just a resume.** A dual-experience portfolio that adapts to your device, featuring an immersive 3D world representing my professional journey.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📖 About The Project
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This portfolio is built to demonstrate technical proficiency through experience. It features a unique **Device-Adaptive Architecture**:
 
-## Expanding the ESLint configuration
+* **🖥️ Desktop Experience:** Unlocks a fully immersive **3D World**. Users can navigate through a 3D environment where each section represents a milestone in my developer journey. (Includes option to switch to 2D).
+* **📱 Mobile Experience:** Automatically defaults to a high-performance, sleek **2D Interface** ensuring accessibility and speed on smaller screens.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Key Features
+
+* **Immersive 3D Environment:** Built with **React Three Fiber** & **Drei**, featuring custom models and environments.
+* **Performance First:** Logic to handle high-fidelity 3D on desktop while serving optimized 2D content to mobile.
+* **Cinematic Animations:** Powered by **GSAP** for smooth camera movements and layout transitions.
+* **Modern Styling:** Utilizing the latest **Tailwind CSS v4** alongside **Material UI** for a polished look.
+* **Seamless Routing:** SPA navigation using **React Router DOM**.
+
+---
+
+## 🛠️ Tech Stack
+
+This project uses the latest web technologies (React 19 ecosystem):
+
+| Category | Technologies |
+| :--- | :--- |
+| **Core** | React 19, Vite |
+| **3D Engine** | Three.js, React Three Fiber (R3F), @react-three/drei |
+| **Styling** | Tailwind CSS v4, Material UI (MUI), Emotion |
+| **Animation** | GSAP (GreenSock) |
+| **Routing** | React Router DOM v7 |
+
+---
+
+## 📸 Snapshots
+
+| 3D Desktop View | 2D Mobile View |
+| :---: | :---: |
+| *(Add Screenshot Here)* | *(Add Screenshot Here)* |
+
+---
+
+## 🚀 Getting Started
+
+To run this project locally on your machine:
+
+### Prerequisites
+Ensure you have Node.js installed.
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/Aniruddhyagoswami/portfolio.git](https://github.com/Aniruddhyagoswami/portfolio.git)
+    cd portfolio
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server**
+    ```bash
+    npm run dev
+    ```
+
+4.  **Open the link**
+    Usually `http://localhost:5173` (or the IP shown in your terminal).
+
+---
+
+## 📂 Project Structure
+
+```text
+src/
+├── assets/          # 3D Models, Images, Icons
+├── components/      # Reusable UI components (Header, etc.)
+├── pages/
+│   ├── WorldCv.jsx  # The 3D World logic (Desktop)
+│   ├── 2Dsite.jsx   # The Standard UI (Mobile/Fallback)
+│   └── Home.jsx     # Logic to detect device and switch views
+├── App.jsx          # Main routing
+└── main.jsx         # Entry point
