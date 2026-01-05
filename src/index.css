@@ -1,4 +1,5 @@
 @import "tailwindcss";
-body{
-    background: #020133;
+*{
+    padding: 0;
+    margin:0;
 }
