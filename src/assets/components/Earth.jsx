@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo } from 'react'
 import { OrbitControls, useGLTF, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
-
+import { useControls } from 'leva' // <--- Import this
 const Earth = () => {
   const { scene } = useGLTF('/models/Eart/earth.glb')
-
+ 
   const [albedo, bump, clouds, oceanMask, lights] = useTexture([
     '/models/Eart/textures/earthalbedo.png',
     '/models/Eart/textures/earthbump.jpg',
@@ -74,14 +74,16 @@ const Earth = () => {
 
   return (
     <>
-      <primitive 
+<primitive 
         object={scene} 
         scale={[-2.5, 2.5, 2.5]} 
-rotation={[Math.PI , 10, 50]}      />
+        // 3. USE THE VALUES FROM THE PANEL x  y  z 
+        rotation={[-5.15, 1.1, 2.2]} 
+      />
       
-      <directionalLight position={[5, 3, 5]} intensity={2} />
-      <ambientLight intensity={0.1} />
-      <OrbitControls enableZoom={true} />
+      <directionalLight position={[100, 3, 5]} intensity={2} />
+      {/* <ambientLight intensity={0.1} /> */}
+
     </>
   )
 }

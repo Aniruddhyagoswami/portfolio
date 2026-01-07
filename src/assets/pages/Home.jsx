@@ -18,7 +18,7 @@ const Home = () => {
          0 = y (centered vertically)
          8 = z (distance away from the object)
       */}
-      <Canvas camera={{ position: [0, 0, 200], fov: 45 }}>
+      <Canvas camera={{ position: [0, 0, 100], fov: 70 }}>
         
         <Suspense fallback={<Loader />}>
           <Earth />
