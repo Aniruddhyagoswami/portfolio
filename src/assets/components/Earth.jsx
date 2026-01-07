@@ -83,7 +83,7 @@ const Earth = () => {
       
       <directionalLight position={[100, 3, 5]} intensity={2} />
       {/* <ambientLight intensity={0.1} /> */}
-
+      {/* <OrbitControls enableZoom={true} /> */}
     </>
   )
 }
