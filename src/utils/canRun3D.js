@@ -1,48 +1,89 @@
 export async function canRun3D() {
-  // 1. WebGL check
   try {
     const canvas = document.createElement('canvas')
     const gl =
       canvas.getContext('webgl') ||
       canvas.getContext('experimental-webgl')
+
     if (!gl) return false
 
-    // 2. GPU check
     const debugInfo = gl.getExtension('WEBGL_debug_renderer_info')
-    if (!debugInfo) return false
+    if (!debugInfo) return true // allow if extension unavailable (Safari/iOS)
 
     const renderer = gl
       .getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
       .toLowerCase()
 
-    // Block weak / mobile / software GPUs
+    /* ---------------- HARD BLOCK (ONLY THESE) ---------------- */
+
     if (
       renderer.includes('swiftshader') ||
       renderer.includes('llvmpipe') ||
-      renderer.includes('mali') ||
-      renderer.includes('adreno') ||
-      renderer.includes('intel hd')
+      renderer.includes('software') ||
+      renderer.includes('angle (software)')
     ) {
       return false
     }
 
-    // 3. Quick FPS probe (~1.5s)
+    /* ---------------- GPU TIERS ---------------- */
+
+    let tier = 'mid'
+
+    // Very weak GPUs
+    if (
+      renderer.includes('adreno 3') ||
+      renderer.includes('adreno 4') ||
+      renderer.includes('mali-400') ||
+      renderer.includes('mali-450') ||
+      renderer.includes('mali-t') ||
+      renderer.includes('powervr sgx')
+    ) {
+      tier = 'low'
+    }
+
+    // Strong GPUs
+    if (
+      renderer.includes('adreno 6') ||
+      renderer.includes('adreno 7') ||
+      renderer.includes('mali-g5') ||
+      renderer.includes('mali-g6') ||
+      renderer.includes('apple') ||
+      renderer.includes('nvidia') ||
+      renderer.includes('radeon')
+    ) {
+      tier = 'high'
+    }
+
+    /* ---------------- MEMORY SAFETY ---------------- */
+
+    const ram = navigator.deviceMemory || 4
+
+    if (tier === 'low' && ram < 4) {
+      return false
+    }
+
+    /* ---------------- FPS PROBE (RELAXED) ---------------- */
+
     let frames = 0
     const start = performance.now()
 
     return await new Promise((resolve) => {
       function loop() {
         frames++
-        if (performance.now() - start < 1500) {
+        if (performance.now() - start < 1200) {
           requestAnimationFrame(loop)
         } else {
-          const fps = frames / 1.5
-          resolve(fps >= 40)
+          const fps = frames / 1.2
+
+          // thresholds per tier
+          if (tier === 'low') resolve(fps >= 20)
+          if (tier === 'mid') resolve(fps >= 24)
+          if (tier === 'high') resolve(true)
         }
       }
       requestAnimationFrame(loop)
     })
   } catch {
-    return false
+    return true // fail open (better UX)
   }
 }
