@@ -1,110 +1,150 @@
-import React, { use, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Home from './assets/pages/Home.jsx'
-import { useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-// import { GSDevTools } from "gsap/GSDevTools";
-import { useStore } from './store/useStore.js';
-import Button from '@mui/material/Button';
+import WorldCv from './assets/pages/WorldCv'
+import TwoDsite from './assets/pages/TwoDsite.jsx'
+import Button from '@mui/material/Button'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { useStore } from './store/useStore.js'
+import { canRun3D } from './utils/canRun3D'
 
-// gsap.registerPlugin(GSDevTools); // register the hook to avoid React version discrepancies 
-gsap.registerPlugin(useGSAP); // register the hook to avoid React version discrepancies 
+gsap.registerPlugin(useGSAP)
+
+/* ---------------- INELIGIBLE OVERLAY ---------------- */
+
+const Ineligible3D = ({ delay = 1200 }) => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate('/2d')
+    }, delay)
+
+    return () => clearTimeout(timer)
+  }, [navigate, delay])
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center text-white">
+      <div className="text-center p-6 rounded-xl bg-black">
+        <h2 className="text-3xl font-bold mb-3">3D Experience Unavailable</h2>
+        <p className="opacity-80">
+          Your device does not meet performance requirements.
+        </p>
+        <p className="mt-2 opacity-60">Redirecting to 2D experience…</p>
+      </div>
+    </div>
+  )
+}
+
+/* ---------------- APP ---------------- */
 
 const App = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
 
-const H1Text = useRef(null);
-const PText=useRef(null);
-const earthAnimation=useStore((state)=>state.earthState);
-const setEarthState=useStore((state)=>state.setEarthState);
+  /* ✅ CORRECT ZUSTAND NAMES */
+  const canSee3d = useStore((s) => s.canSee3d)
+  const setCanSee3d = useStore((s) => s.setCanSee3d)
+  const setEarthState = useStore((s) => s.setEarthState)
 
-const myEnding = () => {
-    gsap
-  .timeline({
-    onComplete: () => {
-      setEarthState("rotateOnce");
-    },
-  })
-  .to(H1Text.current, { color: "red", duration: 0.5 })
-  .to(H1Text.current, { color: "white", duration: 0.5 });
+  const containerRef = useRef(null)
+  const H1Text = useRef(null)
+  const PText = useRef(null)
 
-  };
-useGSAP(() => {
-//all tweens run in direct succession
-let tl = gsap.timeline({
-  onComplete: myEnding,
-  repeatDelay: 1,
-  yoyo: true,
-});
-tl.to(H1Text.current,{duration: 1,opacity:1}).to(PText.current,{duration: 1,opacity:1}, "-=0.5");
+  /* ✅ DEVICE CHECK */
+  useEffect(() => {
+    let mounted = true
 
-  // let eatTimeline =timeline();
+    canRun3D().then((ok) => {
+      if (mounted) setCanSee3d(ok)
+    })
 
-// GSDevTools.create();
-}); // <-- scope is for selector H1Text (optional)
+    return () => {
+      mounted = false
+    }
+  }, [setCanSee3d])
+
+  /* ---------------- TEXT ANIMATION ---------------- */
+
+  const myEnding = () => {
+    if (location.pathname === '/') {
+      setEarthState('rotateOnce')
+    }
+
+    gsap.timeline()
+      .to(H1Text.current, { color: 'red', duration: 0.4 })
+      .to(H1Text.current, { color: 'white', duration: 0.4 })
+  }
+
+  useGSAP(() => {
+    if (!containerRef.current) return
+
+    gsap.killTweensOf([H1Text.current, PText.current])
+
+    if (location.pathname === '/') {
+      gsap.set(containerRef.current, { visibility: 'visible' })
+
+      gsap.timeline({ onComplete: myEnding })
+        .to(H1Text.current, { opacity: 1, duration: 1 })
+        .to(PText.current, { opacity: 1, duration: 1 }, '-=0.5')
+    } else {
+      gsap.to([H1Text.current, PText.current], {
+        opacity: 0,
+        duration: 0.5,
+        onComplete: () =>
+          gsap.set(containerRef.current, { visibility: 'hidden' }),
+      })
+    }
+  }, [location.pathname])
+
+  /* ---------------- RENDER ---------------- */
+
   return (
-    <div className="h-screen w-full bg-black overflow-hidden">
-<div className="fixed z-10 inset-x-0 top-16 px-6 pointer-events-none sm:px-10 lg:px-16">
-  <div className="max-w-3xl  rounded-xl p-4 sm:p-6">
-    <h1
-      ref={H1Text}
-      className="
-        opacity-0
-        text-white
-        font-bold
-        leading-tight
-        text-5xl
-        sm:text-6xl
-        md:text-7xl
-        lg:text-8xl
-      "
-    >
-      Hi,
-    </h1>
+    <div className="h-screen w-full bg-black overflow-hidden relative">
+      {!canSee3d && <Ineligible3D />}
 
-    <p
-      ref={PText}
-      className="
-        opacity-0
-        mt-6
-        text-white
-        leading-relaxed
-        text-lg
-        sm:text-xl
-        md:text-2xl
-        lg:text-2xl
-      "
-    >
-      Welcome to my portfolio. I am{" "}
-      <span className="text-blue-400 font-semibold">
-        Aniruddhya Goswami
-      </span>
-      , and this is my 3D portfolio built with React Three Fiber.
-      It includes both 2D and 3D experiences.
-
-      <span className="block mt-5">
-        If you are in a hurry, you can visit the
-        <Button
-          variant="text"
-          className="text-blue-300!  capitalize! ml-1 pointer-events-auto text-lg sm:text-xl"
+      {canSee3d && (
+        <div
+          ref={containerRef}
+          className="fixed z-10 inset-x-0 top-16 px-6 pointer-events-none"
         >
-          2D site
-        </Button>
-        or just click the earth and continue to explore the 3D site.
-      </span>
-    </p>
-  </div>
-</div>
+          <h1
+            ref={H1Text}
+            className="opacity-0 text-white font-bold text-6xl"
+          >
+            Hi,
+          </h1>
 
+          <p
+            ref={PText}
+            className="opacity-0 mt-6 text-white text-xl"
+          >
+            Welcome to my portfolio. I am{' '}
+            <span className="text-blue-400 font-semibold">
+              Aniruddhya Goswami
+            </span>
+            .
+            <br />
+            You can visit the
+            <Button
+              variant="text"
+              className="ml-2 pointer-events-auto"
+              onClick={() => navigate('/2d')}
+            >
+              2D site
+            </Button>
+            or click the Earth to explore 3D.
+          </p>
+        </div>
+      )}
 
-
-    <Routes>
-
-    <Route path='/' element={<Home />}></Route>
-    
-    </Routes>
-    
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/world" element={<WorldCv />} />
+        <Route path="/2d" element={<TwoDsite />} />
+      </Routes>
     </div>
   )
 }

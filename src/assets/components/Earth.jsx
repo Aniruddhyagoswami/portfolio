@@ -15,57 +15,49 @@ const Earth = () => {
   const { scene } = useGLTF('/models/Eart/earth.glb')
   const earthRef = useRef();
   const initialRotation = useRef([ -5.15, 1.1, 2.2 ]);
-
+const setEarthState = useStore((state) => state.setEarthState);
   const earthAnimation=useStore((state)=>state.earthState);
   const { camera } = useThree();
-  const navigate = useNavigate();
-
+  
 const zoomToEarth = () => {
   if (earthAnimation !== "idleReady") return;
-
-  useStore.getState().setEarthState("zoom");
 
   gsap.killTweensOf(camera.position);
 
   gsap.to(camera.position, {
     x: 0,
     y: 0,
-    z: 40,
+    z: 30,
     duration: 2,
     ease: "power3.inOut",
-    onComplete: () => {
-      navigate("/home"); // or your next route
-    },
+    
   });
 };
+
 
 
 useGSAP(() => {
   if (!earthRef.current) return;
 
-  gsap.killTweensOf(earthRef.current.rotation);
-
-  // PHASE 1: Rotate once
   if (earthAnimation === "rotateOnce") {
     gsap.to(earthRef.current.rotation, {
       y: earthRef.current.rotation.y + Math.PI * 2,
       duration: 6,
       ease: "power1.inOut",
       onComplete: () => {
-        // Return to original India-facing rotation
         gsap.to(earthRef.current.rotation, {
-          
           duration: 0.5,
           ease: "power2.out",
           onComplete: () => {
-            useStore.getState().setEarthState("idleReady");
+            requestAnimationFrame(() => {
+              setEarthState("idleReady");
+            });
           },
         });
       },
     });
   }
 }, [earthAnimation]);
-
 
   const [albedo, bump, clouds, oceanMask, lights] = useTexture([
     '/models/Eart/textures/earthalbedo.png',

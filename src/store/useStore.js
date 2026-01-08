@@ -1,8 +1,9 @@
-import { create } from "zustand";
+import { create } from 'zustand'
 
-export const useStore=create((set)=>({
-earthState: "idle", // idle | rotateOnce | idleReady | zoom
+export const useStore = create((set) => ({
+  earthState: 'idle',
+  setEarthState: (state) => set({ earthState: state }),
 
-
-    setEarthState:(value) => set({earthState:value}),
-}));
+  canSee3d: true,          // default true
+  setCanSee3d: (value) => set({ canSee3d: value }),
+}))

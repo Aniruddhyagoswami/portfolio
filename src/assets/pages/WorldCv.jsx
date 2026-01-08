@@ -2,7 +2,7 @@ import React from 'react'
 
 const WorldCv = () => {
   return (
-    <div>WorldCv</div>
+    <div className='text-9xl text-white'>WorldCv</div>
   )
 }
 

@@ -1,9 +1,9 @@
 import React from 'react'
 
-const 2Dsite = () => {
+const TwoDsite = () => {
   return (
     <div>2Dsite</div>
   )
 }
 
-export default 2Dsite
+export default TwoDsite
