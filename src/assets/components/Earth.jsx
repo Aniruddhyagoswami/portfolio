@@ -5,60 +5,67 @@ import { useControls } from 'leva' // <--- Import this
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { GSDevTools } from "gsap/GSDevTools";
 import { useStore } from '../../store/useStore.js';
 import { useThree } from '@react-three/fiber';
 import { useNavigate } from "react-router-dom";
 
 gsap.registerPlugin(useGSAP); // register the hook to avoid React version discrepancies 
-gsap.registerPlugin(GSDevTools); // register the hook to avoid React version discrepancies
+// gsap.registerPlugin(GSDevTools); // register the hook to avoid React version discrepancies
 const Earth = () => {
   const { scene } = useGLTF('/models/Eart/earth.glb')
   const earthRef = useRef();
+  const initialRotation = useRef([ -5.15, 1.1, 2.2 ]);
+
   const earthAnimation=useStore((state)=>state.earthState);
   const { camera } = useThree();
   const navigate = useNavigate();
 
+const zoomToEarth = () => {
+  if (earthAnimation !== "idleReady") return;
 
-  const zoomToEarth = () => {
-  // stop existing camera animations
+  useStore.getState().setEarthState("zoom");
+
   gsap.killTweensOf(camera.position);
 
   gsap.to(camera.position, {
     x: 0,
     y: 0,
-    z: 40, // closer = more zoom
+    z: 40,
     duration: 2,
     ease: "power3.inOut",
+    onComplete: () => {
+      navigate("/home"); // or your next route
+    },
   });
-
-  // rotate earth slightly while zooming
-  // gsap.to(earthRef.current.rotation, {
-  //   y: "+=" + Math.PI,
-  //   duration: 2,
-  //   ease: "power3.inOut",
-  // });
 };
 
 
- useGSAP(
-  () => {
-    if (!earthRef.current) return;
+useGSAP(() => {
+  if (!earthRef.current) return;
 
-    // stop previous rotations
-    gsap.killTweensOf(earthRef.current.rotation);
+  gsap.killTweensOf(earthRef.current.rotation);
 
-    if (earthAnimation === "animate") {
-      gsap.to(earthRef.current.rotation, {
-        y: "+=" + Math.PI * 2, // full rotation
-        duration: 10,
-        
-        ease: "none",
-      });
-    }
-  },
-  { dependencies: [earthAnimation] }
-);
+  // PHASE 1: Rotate once
+  if (earthAnimation === "rotateOnce") {
+    gsap.to(earthRef.current.rotation, {
+      y: earthRef.current.rotation.y + Math.PI * 2,
+      duration: 6,
+      ease: "power1.inOut",
+      onComplete: () => {
+        // Return to original India-facing rotation
+        gsap.to(earthRef.current.rotation, {
+          
+          duration: 0.5,
+          ease: "power2.out",
+          onComplete: () => {
+            useStore.getState().setEarthState("idleReady");
+          },
+        });
+      },
+    });
+  }
+}, [earthAnimation]);
+
 
   const [albedo, bump, clouds, oceanMask, lights] = useTexture([
     '/models/Eart/textures/earthalbedo.png',

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export const useStore=create((set)=>({
-    earthState:"idle",
+earthState: "idle", // idle | rotateOnce | idleReady | zoom
 
 
     setEarthState:(value) => set({earthState:value}),

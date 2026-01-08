@@ -5,11 +5,11 @@ import Home from './assets/pages/Home.jsx'
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { GSDevTools } from "gsap/GSDevTools";
+// import { GSDevTools } from "gsap/GSDevTools";
 import { useStore } from './store/useStore.js';
 import Button from '@mui/material/Button';
 
-gsap.registerPlugin(GSDevTools); // register the hook to avoid React version discrepancies 
+// gsap.registerPlugin(GSDevTools); // register the hook to avoid React version discrepancies 
 gsap.registerPlugin(useGSAP); // register the hook to avoid React version discrepancies 
 
 const App = () => {
@@ -23,7 +23,7 @@ const myEnding = () => {
     gsap
   .timeline({
     onComplete: () => {
-      setEarthState("animate");
+      setEarthState("rotateOnce");
     },
   })
   .to(H1Text.current, { color: "red", duration: 0.5 })
