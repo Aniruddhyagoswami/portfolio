@@ -20,20 +20,19 @@ const setEarthState = useStore((state) => state.setEarthState);
   const { camera } = useThree();
   
 const zoomToEarth = () => {
-  if (earthAnimation !== "idleReady") return;
+  if (earthAnimation !== 'idleReady') return
 
-  gsap.killTweensOf(camera.position);
+  useStore.getState().setEarthState('zoom')
 
   gsap.to(camera.position, {
-    x: 0,
-    y: 0,
     z: 30,
     duration: 2,
-    ease: "power3.inOut",
-    
-  });
-};
-
+    ease: 'power3.inOut',
+    onComplete: () => {
+      useStore.getState().setEarthState('zoomComplete')
+    },
+  })
+}
 
 
 useGSAP(() => {
