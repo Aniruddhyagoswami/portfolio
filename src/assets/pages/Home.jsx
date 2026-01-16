@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { Html, useProgress } from '@react-three/drei'
 import Earth from '../components/Earth.jsx'
 import { useStore } from '../../store/useStore.js'
+import * as THREE from "three";
 
 function SceneLoader() {
   const { progress } = useProgress()
@@ -12,7 +13,7 @@ function SceneLoader() {
 const Home = () => {
   const canSee3d=useStore((state)=>state.canSee3d);
   return (
-    <div className='fixed top-0 left-0 w-full h-full bg-black'>
+    <div className="fixed top-0 left-0 w-full h-full  bg-[url('/background.png')] bg-cover bg-center ">
       
       {/* FIXED CAMERA:
          [0, 0, 8] 
@@ -20,7 +21,27 @@ const Home = () => {
          0 = y (centered vertically)
          8 = z (distance away from the object)
       */}
-      {canSee3d &&(<Canvas camera={{ position: [0, 0, 100], fov: 70 }}>
+      {canSee3d &&(<Canvas
+      
+       dpr={[1, Math.min(window.devicePixelRatio, 2)]}
+  gl={{
+    antialias: true,
+   alpha: true,
+
+    powerPreference: "high-performance",
+    physicallyCorrectLights: true,
+    toneMapping: THREE.ACESFilmicToneMapping,
+    toneMappingExposure: 1.1,
+  }}
+      
+      camera={{ position: [0, 0, 100], fov: 70 }}
+
+
+      onCreated={({ gl }) => {
+    gl.setClearColor(0x000000, 0); // ✅ THIS IS CRITICAL
+  }}
+      
+      >
         
         <Suspense fallback={<SceneLoader />}>
           <Earth  />
