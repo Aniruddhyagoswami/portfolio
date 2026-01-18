@@ -122,7 +122,7 @@ const App = () => {
       {canSee3d && (
         <div
           ref={containerRef}
-          className="fixed z-10 inset-x-0 top-16 px-6 pointer-events-none"
+          className="fixed left-2.5 z-10 inset-x-0 top-16 px-6 pointer-events-none"
         >
           <h1 ref={H1Text} className="opacity-0 text-white font-bold text-6xl">
             Hi,
