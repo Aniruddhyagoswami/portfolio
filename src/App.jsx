@@ -9,31 +9,75 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { useStore } from './store/useStore.js'
 import { canRun3D } from './utils/canRun3D'
-
+import {
+  Box,
+  Typography,
+  Paper,
+  Backdrop,
+  Stack
+} from "@mui/material";
 gsap.registerPlugin(useGSAP)
 
 /* ---------------- INELIGIBLE OVERLAY ---------------- */
 
-const Ineligible3D = ({ delay = 1200 }) => {
-  const navigate = useNavigate()
+
+const Ineligible3D = ({ delay = 2000 }) => {
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const t = setTimeout(() => navigate('/2d'), delay)
-    return () => clearTimeout(t)
-  }, [navigate, delay])
+    const t = setTimeout(() => navigate("/2d"), delay);
+    return () => clearTimeout(t);
+  }, [navigate, delay]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center text-white">
-      <div className="text-center p-6 rounded-xl bg-black">
-        <h2 className="text-3xl font-bold mb-3">3D Experience Unavailable</h2>
-        <p className="opacity-80">
-          Your device does not meet performance requirements.
-        </p>
-        <p className="mt-2 opacity-60">Redirecting to 2D experience…</p>
-      </div>
-    </div>
-  )
-}
+    <Backdrop
+      open
+      sx={{
+        zIndex: 1300,
+        backgroundColor: "rgba(0,0,0,0.82)",
+      }}
+    >
+      <Paper
+        elevation={0}
+        sx={{
+          px: 4,
+          py: 4,
+          maxWidth: 460,
+          textAlign: "center",
+          borderRadius: 3,
+          backgroundColor: "rgba(11,16,32,0.9)",
+          backdropFilter: "blur(14px)",
+          border: "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
+        <Typography variant="h5" fontWeight={700} gutterBottom>
+          Performance-Optimized Mode
+        </Typography>
+
+        <Typography variant="body1" sx={{ opacity: 0.85 }}>
+          This device may not deliver a smooth 3D experience.
+          You’ll be redirected to the optimized 2D version for
+          the best performance.
+        </Typography>
+
+        <Stack spacing={1.5} mt={3}>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/2d")}
+          >
+            Continue to 2D
+          </Button>
+
+          <Typography variant="caption" sx={{ opacity: 0.6 }}>
+            Redirecting automatically…
+          </Typography>
+        </Stack>
+      </Paper>
+    </Backdrop>
+  );
+};
+
+
 
 /* ---------------- APP ---------------- */
 
@@ -119,34 +163,74 @@ const App = () => {
     <div className="h-screen w-full bg-black overflow-hidden relative">
       {canSee3d === false && <Ineligible3D />}
 
-      {canSee3d && (
-        <div
-          ref={containerRef}
-          className="fixed left-2.5 z-10 inset-x-0 top-16 px-6 pointer-events-none"
-        >
-          <h1 ref={H1Text} className="opacity-0 text-white font-bold text-6xl">
-            Hi,
-          </h1>
+   {canSee3d && (
+  <Box
+    ref={containerRef}
+    sx={{
+      position: "fixed",
+      insetInline: 0,
+      top: 96,
+      px: 3,
+      zIndex: 10,
+      pointerEvents: "none",
+    }}
+  >
+    <Typography
+      ref={H1Text}
+      variant="h2"
+      fontWeight={700}
+      sx={{
+        opacity: 0,
+        color: "text.primary",
+      }}
+    >
+      Hi,
+    </Typography>
 
-          <p ref={PText} className="opacity-0 mt-6 text-white text-xl">
-            Welcome to my portfolio. I am{' '}
-            <span className="text-blue-400 font-semibold">
-              Aniruddhya Goswami
-            </span>
-            .
-            <br />
-            You can visit the
-            <Button
-              variant="text"
-              className="ml-2 pointer-events-auto"
-              onClick={() => navigate('/2d')}
-            >
-              2D site
-            </Button>
-            or click the Earth to explore 3D.
-          </p>
-        </div>
-      )}
+    <Typography
+      ref={PText}
+      variant="h6"
+      sx={{
+        mt: 3,
+        maxWidth: 720,
+        opacity: 0,
+        color: "text.secondary",
+        lineHeight: 1.6,
+      }}
+    >
+      Welcome to my portfolio. I’m{" "}
+      <Box
+        component="span"
+        sx={{ color: "primary.main", fontWeight: 600 }}
+      >
+        Aniruddhya Goswami
+      </Box>
+      , a frontend and 3D-focused developer.
+      <br />
+      This experience adapts to your device—explore the immersive{" "}
+      <Box component="span" sx={{ color: "text.primary" }}>
+        3D environment
+      </Box>{" "}
+      when available, or continue with the optimized{" "}
+      <Button
+        variant="text"
+        color="primary"
+        sx={{
+          px: 0.5,
+          ml: 0.5,
+          pointerEvents: "auto",
+          fontWeight: 500,
+          textTransform: "none",
+        }}
+        onClick={() => navigate("/2d")}
+      >
+        2D experience
+      </Button>
+      .
+    </Typography>
+  </Box>
+)}
+
 
       <Routes>
         <Route path="/" element={<Home />} />
