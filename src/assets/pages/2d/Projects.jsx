@@ -133,7 +133,7 @@ const Projects = () => {
       tags: ["Django", "MySQL", "Bootstrap"],
       liveLink: "https://django-agri-shop.onrender.com",
       githubLink: "https://github.com/Aniruddhyagoswami",
-      image: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=1000&auto=format&fit=crop"
+      image: "/For@2d/projects/agri.png"
     },
     {
       title: "Secure E-Commerce",
