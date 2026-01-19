@@ -7,22 +7,22 @@ const Hero = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Box  sx={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      gap: isMobile ? 0.5 : 1.5, 
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: isMobile ? 0.5 : 1.5,
       alignItems: 'flex-start',
       // PC: Center vertically in the viewport, Mobile: Top-aligned spacing
       justifyContent: isMobile ? 'flex-start' : 'center',
-      minHeight: isMobile ? 'auto' : '60vh', 
+      minHeight: isMobile ? 'auto' : '60vh',
       position: 'relative',
       zIndex: 2
     }}>
       {/* Intro Text */}
-      <Typography 
-        variant={isMobile ? "h5" : "h3"} 
-        fontWeight={700} 
-        sx={{ 
+      <Typography
+        variant={isMobile ? "h5" : "h3"}
+        fontWeight={700}
+        sx={{
           color: "text.primary",
           fontSize: isMobile ? '1.5rem' : '2.5rem',
           letterSpacing: '-0.01em'
@@ -32,10 +32,10 @@ const Hero = () => {
       </Typography>
 
       {/* Name - Hex: #8AB4F8 */}
-      <Typography 
-        variant={isMobile ? "h4" : "h1"} 
-        fontWeight={700} 
-        sx={{ 
+      <Typography
+        variant={isMobile ? "h4" : "h1"}
+        fontWeight={700}
+        sx={{
           color: "#8AB4F8", //
           mb: 1,
           fontSize: isMobile ? '2.2rem' : '4.5rem',
@@ -47,11 +47,11 @@ const Hero = () => {
       </Typography>
 
       {/* Designation */}
-      <Typography 
-        variant={isMobile ? "body1" : "h4"} 
-        fontWeight={500} 
-        sx={{ 
-          color: "text.secondary", 
+      <Typography
+        variant={isMobile ? "body1" : "h4"}
+        fontWeight={500}
+        sx={{
+          color: "text.secondary",
           mb: isMobile ? 4 : 6,
           opacity: 0.9,
           fontSize: isMobile ? '1rem' : '1.75rem'
@@ -61,15 +61,15 @@ const Hero = () => {
       </Typography>
 
       {/* Action Buttons */}
-      <Box sx={{ 
-        display: 'flex', 
-        gap: isMobile ? 1.5 : 3, 
-        flexDirection: 'row', 
+      <Box sx={{
+        display: 'flex',
+        gap: isMobile ? 1.5 : 3,
+        flexDirection: 'row',
         width: isMobile ? '100%' : 'auto',
       }}>
-        
-        <Button 
-          variant="contained" 
+
+        <Button
+          variant="contained"
           sx={{
             flex: isMobile ? 1 : 'none',
             px: isMobile ? 2 : 5,
@@ -84,12 +84,14 @@ const Hero = () => {
               boxShadow: "0 0 30px rgba(59, 130, 246, 0.6)",
             }
           }}
+          href="#Projects"
+
         >
           View Projects
         </Button>
 
-        <Button 
-          variant="outlined" 
+        <Button
+          variant="outlined"
           sx={{
             flex: isMobile ? 1 : 'none',
             px: isMobile ? 2 : 5,

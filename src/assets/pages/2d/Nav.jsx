@@ -13,8 +13,8 @@ const TABS_CONFIG = [
   { value: "About", label: "About", icon: <PsychologyRoundedIcon /> },
   { value: "Skills", label: "Skills", icon: <AutoStoriesRoundedIcon /> },
   { value: "Projects", label: "Projects", icon: <WorkRoundedIcon /> },
-  { value: "JourneyLogs", label: "Journey Log", icon: <AutoStoriesRoundedIcon /> },
   { value: "Education", label: "Education", icon: <SchoolRoundedIcon /> },
+  { value: "JourneyLogs", label: "Journey Log", icon: <AutoStoriesRoundedIcon /> },
 ];
 
 const Nav = () => {

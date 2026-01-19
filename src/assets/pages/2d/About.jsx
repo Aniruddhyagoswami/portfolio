@@ -16,7 +16,7 @@ const About = () => {
 
     return (
         <Box
-            id="Projects" // Matches the hash in your Nav.jsx for scrolling
+            // Matches the hash in your Nav.jsx for scrolling
             sx={{
                 width: '100%',
                 // maxWidth: isMobile ? '100%' : '900px', 
