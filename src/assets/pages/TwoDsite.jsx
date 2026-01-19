@@ -5,6 +5,7 @@ import About from "./2d/About";
 import TeckSkills from "./2d/TeckSkills";
 import Projects from "./2d/Projects";
 import Education from "./2d/Education";
+import GetInTouch from "./2d/GetInTouch";
 
 const TwoDsite = () => {
   const theme = useTheme();
@@ -22,6 +23,7 @@ const TwoDsite = () => {
       overflowX: "hidden",
     }}>
       <Nav />
+      <GetInTouch />
 
       {/* Main Content Container */}
       <Grid container sx={{ width: "100%", pt: isMobile ? "12vh" : "15vh" }}>
