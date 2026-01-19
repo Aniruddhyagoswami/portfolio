@@ -35,40 +35,54 @@ const SkillCategory = ({ title, skills, isMobile }) => (
       {title}
     </Typography>
     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, justifyContent: 'center' }}>
-      {skills.map((skill, idx) => (
-        <Box
-          key={idx}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 0.5,
-            width: '70px'
-          }}
-        >
-          {/* Skill Icon Placeholder - Replace with actual SVG icons for best effect */}
+      {skills.map((skill, idx) => {
+        // Fix: Detect if the icon is a path string for an image
+        const isImagePath = typeof skill.icon === 'string' && (skill.icon.startsWith('/') || skill.icon.includes('.'));
+
+        return (
           <Box
+            key={idx}
             sx={{
-              width: 40,
-              height: 40,
-              borderRadius: '10px',
-              background: 'rgba(255, 255, 255, 0.03)',
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              color: '#fff',
-              fontSize: '1.2rem',
-              mb: 0.5
+              gap: 0.5,
+              width: '70px'
             }}
           >
-            {skill.icon}
+            <Box
+              sx={{
+                width: 40,
+                height: 40,
+                borderRadius: '10px',
+                background: 'rgba(255, 255, 255, 0.03)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                color: '#fff',
+                fontSize: '1.2rem',
+                mb: 0.5,
+                overflow: 'hidden'
+              }}
+            >
+              {isImagePath ? (
+                <Box 
+                  component="img" 
+                  src={skill.icon} 
+                  alt={skill.name} 
+                  sx={{ width: '65%', height: '65%', objectFit: 'contain' }} 
+                />
+              ) : (
+                skill.icon
+              )}
+            </Box>
+            <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.6)', textAlign: 'center', fontSize: '0.7rem' }}>
+              {skill.name}
+            </Typography>
           </Box>
-          <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.6)', textAlign: 'center', fontSize: '0.7rem' }}>
-            {skill.name}
-          </Typography>
-        </Box>
-      ))}
+        );
+      })}
     </Box>
   </Paper>
 );
@@ -81,63 +95,56 @@ const TechSkills = () => {
     {
       title: "Frontend",
       skills: [
-        { name: "React", icon: "⚛️" },
-        { name: "Tailwind", icon: "🌊" },
-        { name: "GSAP", icon: "🪄" },
-        { name: "Vite", icon: "⚡" }
+        { name: "React", icon: "/For@2d/logos/reactjs.svg" },
+        { name: "Tailwind", icon: "/For@2d/logos/tailwind-css.svg" },
+        { name: "GSAP", icon: "/For@2d/logos/GSAP.png" },
+        { name: "Vite", icon: "/For@2d/logos/vite.png" }
       ]
     },
     {
       title: "3D Rendering",
       skills: [
-        { name: "Three.js", icon: "📐" },
-        { name: "R3F", icon: "📦" },
-        { name: "Blender", icon: "🟠" }
+        { name: "Three.js", icon: "/For@2d/logos/threejs.png" },
+        { name: "R3F", icon: "/For@2d/logos/r3f.png" },
+        { name: "Blender", icon: "/For@2d/logos/blender.png" }
       ]
     },
     {
       title: "Backend",
       skills: [
-        { name: "Django", icon: "🌱" },
-        { name: "Spring", icon: "🍃" },
-       
+        { name: "Django", icon: "/For@2d/logos/dj.png" },
+        { name: "Spring", icon: "/For@2d/logos/spring.png" }
       ]
     },
-     {
-      title: "Programming Langues",
+    {
+      title: "Languages",
       skills: [
-        { name: "Python", icon: "🐍" },
-        { name: "Java", icon: "☕" }
-       
+        { name: "Python", icon: "/For@2d/logos/python.png" },
+        { name: "Java", icon: "/For@2d/logos/java.png" },
+        { name: "JavaScript", icon: "/For@2d/logos/js.png" }
+      ]
+    },
+    {
+      title: "Databases",
+      skills: [
+        { name: "MySQL", icon: "/For@2d/logos/mysql.jpg" },
+        { name: "MongoDB", icon: "/For@2d/logos/mongodb.png" }
       ]
     }
   ];
 
   return (
     <Box id="Skills" sx={{ width: '100%', position: 'relative', mb: 10 }}>
-      {/* Section Header */}
       <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', gap: 1.5 }}>
         <TerminalRoundedIcon sx={{ color: '#3B82F6', fontSize: '1.8rem' }} />
         <Box sx={{ position: 'relative' }}>
-          <Typography
-            variant={isMobile ? "h5" : "h4"}
-            fontWeight={700}
-            sx={{ color: '#fff', mb: 0.5 }}
-          >
+          <Typography variant={isMobile ? "h5" : "h4"} fontWeight={700} sx={{ color: '#fff', mb: 0.5 }}>
             Technical Skills
           </Typography>
-          <Box
-            sx={{
-              height: '2px',
-              width: '80px',
-              background: 'linear-gradient(90deg, #3B82F6, transparent)',
-              boxShadow: '0 0 10px #3B82F6'
-            }}
-          />
+          <Box sx={{ height: '2px', width: '80px', background: 'linear-gradient(90deg, #3B82F6, transparent)', boxShadow: '0 0 10px #3B82F6' }} />
         </Box>
       </Box>
 
-      {/* Skills Grid */}
       <Grid container spacing={3}>
         {skillGroups.map((group, index) => (
           <Grid size={{ xs: 12, md: 4 }} key={index}>
