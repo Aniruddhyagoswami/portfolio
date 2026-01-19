@@ -24,6 +24,7 @@ export const Theme = createTheme({
       primary: "#E5E7EB",   // Headings
       secondary: "#9CA3AF", // Body text
       disabled: "#6B7280",
+      nameColor:"#8AB4F8"
     },
 
     divider: "rgba(255,255,255,0.08)",

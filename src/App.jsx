@@ -103,7 +103,7 @@ const App = () => {
   /* ---------------- RENDER ---------------- */
 
   return (
-    <div className="h-screen w-full bg-black overflow-hidden relative">
+    <div className={`w-full bg-black relative ${location.pathname === '/2d' ? 'min-h-screen' : 'h-screen overflow-hidden'}`}>
       {canSee3d === false && <Ineligible3D />}
 
       {canSee3d && (
