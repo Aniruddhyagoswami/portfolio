@@ -132,7 +132,7 @@ const Projects = () => {
       description: "A farmer-centric e-commerce platform built for buying and selling produce with secure authentication.",
       tags: ["Django", "MySQL", "Bootstrap"],
       liveLink: "https://django-agri-shop.onrender.com",
-      githubLink: "https://github.com/Aniruddhyagoswami",
+      githubLink: "https://github.com/Aniruddhyagoswami/django-agri-shop",
       image: "/For@2d/projects/agri.png"
     },
     {
@@ -140,7 +140,7 @@ const Projects = () => {
       description: "Full-stack web shop featuring Google OAuth 2.0 integration and a robust Spring Boot backend.",
       tags: ["React", "Spring Boot", "OAuth 2.0"],
       liveLink: "#",
-      githubLink: "https://github.com/Aniruddhyagoswami",
+      githubLink: "https://github.com/Aniruddhyagoswami/bazar",
       image: "https://imgs.search.brave.com/JtiO09BQ616gc5gT4tdNPXz8lmUkSHnszeCbYT_8ON0/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9taXIt/czMtY2RuLWNmLmJl/aGFuY2UubmV0L3By/b2plY3RzLzQwNC84/YTg0Y2YyMzM3NTEy/MzkuWTNKdmNDd3hN/elF5TERFd05UQXNN/amtzTUEuanBn"
     },
     {
