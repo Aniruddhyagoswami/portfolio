@@ -1,11 +1,12 @@
 import { Typography, useTheme, useMediaQuery, Box, Button } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const theme = useTheme();
   // Standard mobile breakpoint for Material UI
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const nav=useNavigate()
   return (
     <Box sx={{
       display: 'flex',
@@ -106,7 +107,7 @@ const Hero = () => {
               backgroundColor: "rgba(255, 255, 255, 0.15)",
             }
           }}
-          href='/world'
+          onClick={()=>nav("/world")}
         >
           Enter 3D World
         </Button>
