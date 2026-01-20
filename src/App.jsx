@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, Suspense, lazy } from 'react'
 import './App.css'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import Home from './assets/pages/Home.jsx'
-import WorldCv from './assets/pages/WorldCv'
-import TwoDsite from './assets/pages/TwoDsite.jsx'
+
+const Home = lazy(() => import('./assets/pages/Home.jsx'));
+const TwoDsite = lazy(() => import('./assets/pages/TwoDsite.jsx'));
+const WorldCv = lazy(() => import('./assets/pages/WorldCv'));
 import Button from '@mui/material/Button'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -12,7 +13,7 @@ import { canRun3D } from './utils/canRun3D'
 import {
   Box,
   Typography,
- 
+
 } from "@mui/material";
 import Ineligible3D from './utils/Ineligible3D.jsx'
 
@@ -177,8 +178,16 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/world" element={<WorldCv />} />
-        <Route path="/2d" element={<TwoDsite />} />
+        <Route path="/world" element={
+          <Suspense fallback={<div style={{ backgroundColor: '#000', height: '100vh' }} />}>
+            <WorldCv />
+          </Suspense>
+        } />
+        <Route path="/2d" element={
+          <Suspense fallback={<div style={{ backgroundColor: '#000', height: '100vh' }} />}>
+            <TwoDsite />
+          </Suspense>
+        } />
       </Routes>
     </div>
   )
