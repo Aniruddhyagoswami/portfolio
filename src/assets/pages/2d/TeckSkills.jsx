@@ -88,6 +88,7 @@ const SkillCategory = ({ title, skills, isMobile }) => (
                   src={skill.icon}
                   alt={skill.name}
                   sx={{ width: "65%", height: "65%", objectFit: "contain" }}
+                  loading="lazy"
                 />
               ) : (
                 skill.icon
