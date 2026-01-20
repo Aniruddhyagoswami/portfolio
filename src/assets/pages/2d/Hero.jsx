@@ -106,6 +106,7 @@ const Hero = () => {
               backgroundColor: "rgba(255, 255, 255, 0.15)",
             }
           }}
+          href='/world'
         >
           Enter 3D World
         </Button>
