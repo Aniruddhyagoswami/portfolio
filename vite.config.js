@@ -2,24 +2,69 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  publicDir: 'public', // Ensures Vite looks into the public folder
+  plugins: [
+    react({
+      // Ensures Emotion + React optimizations
+      jsxImportSource: '@emotion/react',
+    }),
+    tailwindcss(),
+  ],
+
+  publicDir: 'public',
+
   build: {
     outDir: 'dist',
-    copyPublicDir: true, // Guarantees _redirects is copied to dist/
-    chunkSizeWarningLimit: 1000, // Raises limit to 1MB to reduce warnings
+    copyPublicDir: true,
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000,
+
     rollupOptions: {
       output: {
-        // Optimization: Splitting large libraries into their own files
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('@mui')) return 'vendor-mui';
-            if (id.includes('three')) return 'vendor-three';
-            if (id.includes('gsap')) return 'vendor-gsap';
-            return 'vendor'; // all other dependencies
+          if (!id.includes('node_modules')) return
+
+          // --- UI STACK ---
+          if (
+            id.includes('@mui') ||
+            id.includes('@emotion')
+          ) {
+            return 'vendor-mui'
           }
+
+          // --- THREE / R3F STACK ---
+          if (
+            id.includes('three') ||
+            id.includes('@react-three')
+          ) {
+            return 'vendor-three'
+          }
+
+          // --- ANIMATION ---
+          if (id.includes('gsap')) {
+            return 'vendor-gsap'
+          }
+
+          // --- STATE ---
+          if (id.includes('zustand')) {
+            return 'vendor-state'
+          }
+
+          // --- ROUTING ---
+          if (id.includes('react-router')) {
+            return 'vendor-router'
+          }
+
+          // --- REACT CORE ---
+          if (
+            id.includes('react') ||
+            id.includes('scheduler')
+          ) {
+            return 'vendor-react'
+          }
+
+          // Everything else
+          return 'vendor'
         },
       },
     },
