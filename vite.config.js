@@ -2,63 +2,24 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react({
-      jsxImportSource: '@emotion/react',
-    }),
-    tailwindcss(),
-  ],
-
-  publicDir: 'public',
-
+  plugins: [react(), tailwindcss()],
+  publicDir: 'public', // Ensures Vite looks into the public folder
   build: {
     outDir: 'dist',
-    copyPublicDir: true,
-    sourcemap: false,
-    chunkSizeWarningLimit: 1000,
-
+    copyPublicDir: true, // Guarantees _redirects is copied to dist/
+    chunkSizeWarningLimit: 1000, // Raises limit to 1MB to reduce warnings
     rollupOptions: {
       output: {
+        // Optimization: Splitting large libraries into their own files
         manualChunks(id) {
-          if (!id.includes('node_modules')) return
-
-          // --- MUI + EMOTION ---
-          if (
-            id.includes('@mui') ||
-            id.includes('@emotion')
-          ) {
-            return 'vendor-mui'
+          if (id.includes('node_modules')) {
+            if (id.includes('@mui')) return 'vendor-mui';
+            if (id.includes('three')) return 'vendor-three';
+            if (id.includes('gsap')) return 'vendor-gsap';
+            return 'vendor'; // all other dependencies
           }
-
-          // --- THREE / R3F ---
-          if (
-            id.includes('three') ||
-            id.includes('@react-three')
-          ) {
-            return 'vendor-three'
-          }
-
-          // --- GSAP ---
-          if (id.includes('gsap')) {
-            return 'vendor-gsap'
-          }
-
-          // --- ROUTER ---
-          if (id.includes('react-router')) {
-            return 'vendor-router'
-          }
-
-          // --- REACT + STATE (KEEP TOGETHER) ---
-          if (
-            id.includes('react') ||
-            id.includes('scheduler') ||
-            id.includes('zustand')
-          ) {
-            return 'vendor-react'
-          }
-
-          return 'vendor'
         },
       },
     },
