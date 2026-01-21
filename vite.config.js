@@ -5,7 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     react({
-      // Ensures Emotion + React optimizations
       jsxImportSource: '@emotion/react',
     }),
     tailwindcss(),
@@ -24,7 +23,7 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes('node_modules')) return
 
-          // --- UI STACK ---
+          // --- MUI + EMOTION ---
           if (
             id.includes('@mui') ||
             id.includes('@emotion')
@@ -32,7 +31,7 @@ export default defineConfig({
             return 'vendor-mui'
           }
 
-          // --- THREE / R3F STACK ---
+          // --- THREE / R3F ---
           if (
             id.includes('three') ||
             id.includes('@react-three')
@@ -40,30 +39,25 @@ export default defineConfig({
             return 'vendor-three'
           }
 
-          // --- ANIMATION ---
+          // --- GSAP ---
           if (id.includes('gsap')) {
             return 'vendor-gsap'
           }
 
-          // --- STATE ---
-          if (id.includes('zustand')) {
-            return 'vendor-state'
-          }
-
-          // --- ROUTING ---
+          // --- ROUTER ---
           if (id.includes('react-router')) {
             return 'vendor-router'
           }
 
-          // --- REACT CORE ---
+          // --- REACT + STATE (KEEP TOGETHER) ---
           if (
             id.includes('react') ||
-            id.includes('scheduler')
+            id.includes('scheduler') ||
+            id.includes('zustand')
           ) {
             return 'vendor-react'
           }
 
-          // Everything else
           return 'vendor'
         },
       },
