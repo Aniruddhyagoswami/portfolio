@@ -28,6 +28,7 @@ A new full‑screen background image (`public/background.png`) has been added to
 | **Dynamic Background** | A high‑resolution background (`/background.png`) now covers the entire viewport behind the 3D canvas. | ✅ Stable |
 | **Performance‑First** | Logic to handle high‑fidelity 3D on desktop while serving optimized 2D content to mobile. | ✅ Stable |
 | **Cinematic Animations** | Powered by **GSAP** for smooth camera movements and layout transitions. | ✅ Stable |
+| **Documentation** | Comprehensive [Wiki](WIKI.md) describing the architecture and components. | ✅ Stable |
 | **Modern Styling** | Tailwind CSS v4 + Material UI (MUI) + Emotion for a polished look. | ✅ Stable |
 | **Seamless Routing** | SPA navigation using **React Router DOM**. | ✅ Stable |
 | **Adjusted Camera Perspective** | Camera now starts at `[0, 0, 100]` with a 70° FOV, delivering a more expansive view of the Earth model. | ✅ Stable |
@@ -88,7 +89,7 @@ src/
 │   └── pages/
 │       ├── Home.jsx     # Detects device & switches between 3D/2D views
 │       ├── WorldCv.jsx  # 3D World logic (Desktop)
-│       └── 2Dsite.jsx   # Standard UI (Mobile/Fallback)
+│       └── TwoDsite.jsx # Standard UI (Mobile/Fallback)
 ├── components/          # Shared components used across pages
 ├── store/
 │   └── useStore.js      # Zustand store handling `canSee3d` flag
