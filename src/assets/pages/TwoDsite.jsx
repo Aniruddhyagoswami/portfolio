@@ -6,6 +6,7 @@ import TeckSkills from "./2d/TeckSkills";
 import Projects from "./2d/Projects";
 import Education from "./2d/Education";
 import GetInTouch from "./2d/GetInTouch";
+import JourneyStepper from "./2d/Steps";
 
 const TwoDsite = () => {
   const theme = useTheme();
@@ -100,6 +101,22 @@ const TwoDsite = () => {
           id="Education"
         >
           <Education />
+        </Grid>
+
+
+         {/* SECTION 6: Jourjey log */}
+
+        <Grid
+          size={12}
+          sx={{
+            px: isMobile ? "5vw" : "10vw",
+            pb: 5, // Space at the bottom of the page
+            display: "flex",
+            flexDirection: "column"
+          }}
+          id="JourneyLogs"
+        >
+         <JourneyStepper />
         </Grid>
 
       </Grid>
