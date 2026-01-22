@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Tabs, Tab, Box, useMediaQuery, useTheme } from "@mui/material";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
@@ -6,6 +6,8 @@ import AutoStoriesRoundedIcon from "@mui/icons-material/AutoStoriesRounded";
 import MailRoundedIcon from "@mui/icons-material/MailRounded";
 import PsychologyRoundedIcon from "@mui/icons-material/PsychologyRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
+import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
+import { useNavigate } from "react-router-dom";
 
 // Moved outside to prevent re-creation on every render
 const TABS_CONFIG = [
@@ -15,12 +17,18 @@ const TABS_CONFIG = [
   { value: "Projects", label: "Projects", icon: <WorkRoundedIcon /> },
   { value: "Education", label: "Education", icon: <SchoolRoundedIcon /> },
   { value: "JourneyLogs", label: "Journey Log", icon: <AutoStoriesRoundedIcon /> },
+  { value: "Wiki", label: "Wiki", icon: <MenuBookRoundedIcon /> },
 ];
 
 const Nav = () => {
-  const [value, setValue] = useState("Home");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const navigate = useNavigate();
+
+  const [value, setValue] = useState(() => {
+    const hash = window.location.hash.replace("#", "");
+    return TABS_CONFIG.some((t) => t.value === hash) ? hash : "Home";
+  });
 
   // Sync with Hash: Optimized with useCallback
   const syncHash = useCallback(() => {
@@ -31,14 +39,17 @@ const Nav = () => {
   }, []);
 
   useEffect(() => {
-    syncHash();
     window.addEventListener("hashchange", syncHash);
     return () => window.removeEventListener("hashchange", syncHash);
   }, [syncHash]);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-    window.location.hash = newValue;
+    if (newValue === "Wiki") {
+      navigate("/wiki");
+    } else {
+      setValue(newValue);
+      window.location.hash = newValue;
+    }
   };
 
   return (

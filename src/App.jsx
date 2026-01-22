@@ -5,6 +5,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 const Home = lazy(() => import('./assets/pages/Home.jsx'));
 const TwoDsite = lazy(() => import('./assets/pages/TwoDsite.jsx'));
 const WorldCv = lazy(() => import('./assets/pages/WorldCv'));
+const Wiki = lazy(() => import('./assets/pages/Wiki.jsx'));
 import Button from '@mui/material/Button'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -186,6 +187,11 @@ const App = () => {
         <Route path="/2d" element={
           <Suspense fallback={<div style={{ backgroundColor: '#000', height: '100vh' }} />}>
             <TwoDsite />
+          </Suspense>
+        } />
+        <Route path="/wiki" element={
+          <Suspense fallback={<div style={{ backgroundColor: '#000', height: '100vh' }} />}>
+            <Wiki />
           </Suspense>
         } />
       </Routes>
