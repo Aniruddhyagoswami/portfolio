@@ -147,7 +147,7 @@ const Projects = () => {
       title: "Interactive 3D Portfolio",
       description: "Device-adaptive cinematic experience showcasing 3D environments and performant 2D fallbacks.",
       tags: ["React 19", "Three.js", "GSAP"],
-      liveLink: "/2d",
+      liveLink: "/",
       githubLink: "https://github.com/Aniruddhyagoswami",
       image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop"
     }

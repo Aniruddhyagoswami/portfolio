@@ -4,6 +4,7 @@ import { Html, useProgress } from '@react-three/drei'
 import Earth from '../components/Earth.jsx'
 import { useStore } from '../../store/useStore.js'
 import * as THREE from "three";
+import Stars from "../components/Stars";
 
 function SceneLoader() {
   const { progress } = useProgress()
@@ -13,7 +14,7 @@ function SceneLoader() {
 const Home = () => {
   const canSee3d=useStore((state)=>state.canSee3d);
   return (
-    <div className="fixed top-0 left-0 w-full h-full  bg-[url('/background.png')] bg-cover bg-center ">
+   <div className="fixed inset-0 bg-black">
       
       {/* FIXED CAMERA:
          [0, 0, 8] 
@@ -34,7 +35,8 @@ const Home = () => {
     toneMappingExposure: 1.1,
   }}
       
-      camera={{ position: [0, 0, 100], fov: 70 }}
+      camera={{ position: [0, 0, 100], fov: 40 }}
+
 
 
       onCreated={({ gl }) => {
@@ -44,6 +46,8 @@ const Home = () => {
       >
         
         <Suspense fallback={<SceneLoader />}>
+          
+          <Stars />
           <Earth  />
         </Suspense>
 

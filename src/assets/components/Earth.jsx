@@ -96,16 +96,27 @@ useGSAP(() => {
     })
   }, [clouds])
 
-  const atmoMaterial = useMemo(() => {
-    return new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#4da2ff'),
-      transparent: true,
-      opacity: 0.1,
-      depthWrite: false,
-      side: THREE.BackSide,
-      map: null
-    })
-  }, [])
+  // const atmoMaterial = useMemo(() => {
+  //   return new THREE.MeshStandardMaterial({
+  //     color: new THREE.Color('#4da2ff'),
+  //     transparent: true,
+  //     opacity: 0.08,
+  //     depthWrite: false,
+  //     side: THREE.BackSide,
+  //     map: null,
+  //     blending: THREE.AdditiveBlending,
+  //   })
+  // }, [])
+
+  const atmoMaterial = new THREE.MeshStandardMaterial({
+  color: new THREE.Color('#6bbcff'),
+  transparent: true,
+  opacity: 0.06,
+  depthWrite: false,
+  side: THREE.BackSide,
+  blending: THREE.AdditiveBlending,
+});
+
 
   useEffect(() => {
     scene.traverse((child) => {
@@ -119,7 +130,7 @@ useGSAP(() => {
         } 
         else if (child.name === 'atmo') {
           child.material = atmoMaterial
-          child.scale.setScalar(1.03)
+          child.scale.setScalar(1.04)
         }
       }
     })
@@ -144,7 +155,13 @@ rotation={[-5.15, 1.1, 2.2]}
 />
       
 </group>
-      <directionalLight position={[100, 3, 5]} intensity={2} />
+      <directionalLight position={[30, 3, 5]} 
+      
+      
+      intensity={0.95} 
+      
+      
+      />
       {/* <ambientLight intensity={0.1} /> */}
       {/* <OrbitControls enableZoom={true} /> */}
     </>

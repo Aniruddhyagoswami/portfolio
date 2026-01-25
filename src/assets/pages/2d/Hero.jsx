@@ -91,7 +91,7 @@ const Hero = () => {
           View Projects
         </Button>
 
-        <Button
+        {/* <Button
           variant="outlined"
           sx={{
             flex: isMobile ? 1 : 'none',
@@ -110,7 +110,7 @@ const Hero = () => {
           onClick={()=>nav("/world")}
         >
           Enter 3D World
-        </Button>
+        </Button> */}
       </Box>
     </Box>
   );

@@ -105,7 +105,7 @@ const TwoDsite = () => {
 
 
          {/* SECTION 6: Jourjey log */}
-
+{/* 
         <Grid
           size={12}
           sx={{
@@ -117,7 +117,7 @@ const TwoDsite = () => {
           id="JourneyLogs"
         >
          <JourneyStepper />
-        </Grid>
+        </Grid> */}
 
       </Grid>
     </Box>

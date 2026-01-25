@@ -14,7 +14,7 @@ const TABS_CONFIG = [
   { value: "Skills", label: "Skills", icon: <AutoStoriesRoundedIcon /> },
   { value: "Projects", label: "Projects", icon: <WorkRoundedIcon /> },
   { value: "Education", label: "Education", icon: <SchoolRoundedIcon /> },
-  { value: "JourneyLogs", label: "Journey Log", icon: <AutoStoriesRoundedIcon /> },
+  // { value: "JourneyLogs", label: "Journey Log", icon: <AutoStoriesRoundedIcon /> },
 ];
 
 const Nav = () => {
@@ -47,7 +47,7 @@ const Nav = () => {
         position: "fixed",
         top: isMobile ? "auto" : 18,
         bottom: isMobile ? 20 : "auto",
-        left: isMobile?"50%":"30%",
+        left: isMobile?"50%":"25%",
         transform: "translateX(-50%)",
         zIndex: 1000,
         width: isMobile ? "94%" : "auto",

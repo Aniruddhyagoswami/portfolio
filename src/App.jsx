@@ -119,59 +119,58 @@ const App = () => {
             pointerEvents: "none",
           }}
         >
-          <Typography
-            ref={H1Text}
-            variant="h2"
-            fontWeight={700}
-            sx={{
-              opacity: 0,
-              color: "text.primary",
-            }}
-          >
-            Hi,
-          </Typography>
+      <Typography
+  ref={H1Text}
+  variant="h2"
+  fontWeight={700}
+  sx={{
+    opacity: 0,
+    color: "text.primary",
+  }}
+>
+  Hello,
+</Typography>
 
-          <Typography
-            ref={PText}
-            variant="h6"
-            sx={{
-              mt: 3,
-              maxWidth: 720,
-              opacity: 0,
-              color: "text.secondary",
-              lineHeight: 1.6,
-            }}
-          >
-            Welcome to my portfolio. I’m{" "}
-            <Box
-              component="span"
-              sx={{ color: "primary.main", fontWeight: 600 }}
-            >
-              Aniruddhya Goswami
-            </Box>
-            , a frontend and 3D-focused developer.
-            <br />
-            This experience adapts to your device—explore the immersive{" "}
-            <Box component="span" sx={{ color: "text.primary" }}>
-              3D environment
-            </Box>{" "}
-            when available, or continue with the optimized{" "}
-            <Button
-              variant="text"
-              color="primary"
-              sx={{
-                px: 0.5,
-                ml: 0.5,
-                pointerEvents: "auto",
-                fontWeight: 500,
-                textTransform: "none",
-              }}
-              onClick={() => navigate("/2d")}
-            >
-              2D experience
-            </Button>
-            .
-          </Typography>
+<Typography
+  ref={PText}
+  variant="h6"
+  sx={{
+    mt: 3,
+    maxWidth: 720,
+    opacity: 0,
+    color: "text.secondary",
+    lineHeight: 1.6,
+  }}
+>
+  Welcome to my portfolio. I’m{" "}
+  <Box component="span" sx={{ color: "primary.main", fontWeight: 600 }}>
+    Aniruddhya Goswami
+  </Box>
+  , a frontend engineer with a strong focus on interactive and 3D web
+  experiences.
+  <br />
+  This portfolio adapts to your device—explore the immersive{" "}
+  <Box component="span" sx={{ color: "text.primary", fontWeight: 500 }}>
+    3D environment
+  </Box>{" "}
+  when supported, or continue with the optimized{" "}
+  <Button
+    variant="text"
+    color="primary"
+    sx={{
+      px: 0.5,
+      ml: 0.5,
+      pointerEvents: "auto",
+      fontWeight: 500,
+      textTransform: "none",
+    }}
+    onClick={() => navigate("/2d")}
+  >
+    2D experience
+  </Button>
+  .
+</Typography>
+
         </Box>
       )}
 
