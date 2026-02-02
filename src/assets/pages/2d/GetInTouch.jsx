@@ -10,7 +10,7 @@ const GetInTouch = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const contactLinks = [
-    { label: "Email", icon: <EmailRoundedIcon />, url: "mailto:anruddhyagoswami6@gmail.com" },
+    { label: "Email", icon: <EmailRoundedIcon />, url: "mailto:aniruddhyagoswami6@gmail.com" },
     { label: "LinkedIn", icon: <LinkedInIcon />, url: "https://linkedin.com/in/aniruddhya-goswami-1b9540287" },
     { label: "GitHub", icon: <GitHubIcon />, url: "https://github.com/Aniruddhyagoswami" },
   ];
