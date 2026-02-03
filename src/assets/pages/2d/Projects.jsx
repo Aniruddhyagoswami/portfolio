@@ -4,7 +4,7 @@ import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FolderSpecialRoundedIcon from '@mui/icons-material/FolderSpecialRounded';
 
-const ProjectCard = ({ title, description, tags, liveLink, githubLink, image, isMobile }) => (
+const ProjectCard = ({ title, description, tags, liveLink, githubLink, image, isMobile,isPrivate }) => (
   <Paper
     sx={{
       p: 0,
@@ -100,7 +100,7 @@ const ProjectCard = ({ title, description, tags, liveLink, githubLink, image, is
         >
           Launch
         </Button>
-        <Button
+        {isPrivate!=true&&<Button
           variant="outlined"
           size="small"
           startIcon={<GitHubIcon />}
@@ -116,7 +116,7 @@ const ProjectCard = ({ title, description, tags, liveLink, githubLink, image, is
           }}
         >
           GitHub
-        </Button>
+        </Button>}
       </Box>
     </Box>
   </Paper>
@@ -126,32 +126,49 @@ const Projects = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+ 
   const projectList = [
     {
-      title: "AgriShop",
-      description: "A farmer-centric e-commerce platform built for buying and selling produce with secure authentication.",
-      tags: ["Django", "MySQL", "Bootstrap"],
+      title: "AgriShop (Django)",
+      description:
+        "Farmer-centric e-commerce platform enabling secure buying and selling of agricultural products.",
+      tags: ["Django", "Python", "MySQL", "Bootstrap"],
       liveLink: "https://django-agri-shop.onrender.com",
       githubLink: "https://github.com/Aniruddhyagoswami/django-agri-shop",
-      image: "/For@2d/projects/agri.png"
+      image: "/For@2d/projects/agri.png",
     },
     {
-      title: "Secure E-Commerce",
-      description: "Full-stack web shop featuring Google OAuth 2.0 integration and a robust Spring Boot backend.",
-      tags: ["React", "Spring Boot", "OAuth 2.0"],
+      title: "Secure E-Commerce Platform",
+      description:
+        "Full-stack e-commerce application with OAuth authentication and REST APIs.",
+      tags: ["React", "Spring Boot", "Java", "OAuth 2.0"],
       liveLink: "#",
       githubLink: "https://github.com/Aniruddhyagoswami/bazar",
-      image: "https://imgs.search.brave.com/JtiO09BQ616gc5gT4tdNPXz8lmUkSHnszeCbYT_8ON0/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9taXIt/czMtY2RuLWNmLmJl/aGFuY2UubmV0L3By/b2plY3RzLzQwNC84/YTg0Y2YyMzM3NTEy/MzkuWTNKdmNDd3hN/elF5TERFd05UQXNN/amtzTUEuanBn"
+      image:
+        "https://images.unsplash.com/photo-1518770660439-4636190af475",
     },
     {
       title: "Interactive 3D Portfolio",
-      description: "Device-adaptive cinematic experience showcasing 3D environments and performant 2D fallbacks.",
-      tags: ["React 19", "Three.js", "GSAP"],
+      description:
+        "Cinematic portfolio experience with immersive 3D scenes and optimized fallbacks.",
+      tags: ["React", "Three.js", "R3F", "GSAP"],
       liveLink: "/",
       githubLink: "https://github.com/Aniruddhyagoswami",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop"
-    }
+      image:
+        "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
+    },
+    {
+      title: "Milkly / Can Pop – Brand Website",
+      description:
+        "Client marketing website featuring animations and responsive UI.",
+      tags: ["React", "JavaScript", "CSS", "UI Animation"],
+      liveLink: "https://milkly-wheat.vercel.app/",
+      githubLink: "#",
+      image: "/For@2d/projects/milkly.png",
+      isPrivate: true,
+    },
   ];
+
 
   return (
     <Box id="Projects" sx={{ width: '100%', mb: 15 }}>
